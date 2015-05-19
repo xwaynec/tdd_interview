@@ -1,7 +1,7 @@
 require './boot'
 require './topic'
 require './post'
-#require './article'
+require './article'
 
 describe "TDD example" do
 
@@ -12,27 +12,27 @@ describe "TDD example" do
 
   it "should validate title" do
     topic = Topic.new
-    topic.save.should be_false
+    expect(topic.save).to eq(false)
   end
 
   it "should create topic from article" do
     article = Article.build( :title => "foobar" )
     article.save
 
-    Topic.last.title.should eq("foobar")
+    expect(Topic.last.title).to eq('foobar')
   end
 
   it "should create topic and post from article" do
     article = Article.build( :title => "foobar", :posts_attributes => [ { :content => "a" }, {:content => "b"} ] )
 
-    Topic.count.should eq(0)
+    expect(Topic.count).to eq(0)
 
     article.save
 
     topic = Topic.last
-    topic.title.should eq("foobar")
-    topic.posts.count.should eq(2)
-    topic.posts.last.content.should eq("b")
+    expect(topic.title).to eq("foobar")
+    expect(topic.posts.count).to eq(2)
+    expect(topic.posts.last.content).to eq("b")
   end
 
   describe "existed article" do
@@ -44,9 +44,9 @@ describe "TDD example" do
     it "should find existed article" do
       @article = Article.find( @topic.id )
 
-      @article.class.should eq(Article)
+      expect(@article.class).to eq(Article)
 
-      @article.title.should eq("foobar")
+      expect(@article.title).to eq("foobar")
     end
 
     it "should update topic" do
@@ -56,7 +56,7 @@ describe "TDD example" do
       @article.save
 
       @topic.reload
-      @topic.title.should eq("foobar2")
+      expect(@topic.title).to eq("foobar2")
     end
 
     it "should update posts" do
@@ -66,9 +66,9 @@ describe "TDD example" do
       @article.save
 
       @post.reload
-      @post.content.should eq("Z")
+      expect(@post.content).to eq("Z")
 
-      @topic.posts.count.should eq(2)
+      expect(@topic.posts.count).to eq(2)
     end
 
   end
