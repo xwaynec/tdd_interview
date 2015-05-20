@@ -1,6 +1,7 @@
 require './boot'
 require './topic'
 require './post'
+require './article'
 
 describe "TDD example" do
 
